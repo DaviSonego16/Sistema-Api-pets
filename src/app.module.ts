@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { LivrosController } from './livrros.controller';
-import { LivrosService } from './livros.service';
+import { AppController } from './Contollers/app.controller';
+import { AppService } from './Services/app.service';
+import { PostagemController } from './Contollers/postagem.contoller';
+import { PostagemService } from './Services/postagem.service';
+import { UserController} from './Contollers/user.controller';
+import { UserService } from './Services/users.service';
 import { SequelizeModule } from '@nestjs/sequelize/dist/sequelize.module';
-import { Livro } from './livro.model';
+import { Postagem } from './Models/postagem.model';
+import { Users } from './Models/users.model';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -16,13 +19,13 @@ import { ConfigModule } from '@nestjs/config';
       port: 3306,
       username: process.env.USUARIO_BANCO_DADOS,
       password: process.env.SENHA_BANCO_DADOS,
-      database: 'livraria',
+      database: 'sistema-pet',
       autoLoadModels: true,
       synchronize: true
     }),
-    SequelizeModule.forFeature([Livro])
+    SequelizeModule.forFeature([Postagem, Users])
   ],
-  controllers: [AppController, LivrosController],
-  providers: [AppService, LivrosService]
+  controllers: [AppController, PostagemController, UserController],
+  providers: [AppService, PostagemService, UserService]
 })
 export class AppModule {}
