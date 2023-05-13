@@ -18,7 +18,7 @@ export class PostagemService {
        return data
     }
 
-    async criar(postagem: Postagem) {
+    async criar(postagem) {
         this.postagemModel.create(postagem)
     }
 

@@ -1,6 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Res, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { Postagem } from "../Models/postagem.model";
 import { PostagemService } from "../Services/postagem.service";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { diskStorage } from 'multer'
+import path, { extname, join } from "path";
 
 @Controller('posts')
 export class PostagemController {
@@ -9,18 +12,34 @@ export class PostagemController {
     }
     
     @Get()
-    async obterTodos(): Promise <Postagem[]> {
-        return this.postService.obterTodos()
+    async obterTodos(): Promise<Postagem[]> {
+        const postagens = await this.postService.obterTodos()
+        for(var postagem in postagens){
+            console.log(postagem, postagens[postagem])
+        }
+        return postagens
     }
 
     @Get(':id')
-    async obterUm(@Param() params): Promise <Postagem> {
-        return this.postService.obterUm(params.id)
+    async obterUm(@Param() params, @Res() res): Promise <Postagem> {
+        const postagem = this.postService.obterUm(params.id)
+        return (res.sendFile(join(process.cwd(),(await postagem).Img)))
     }
- 
+
     @Post()
-    async criar(@Body() postagem: Postagem) {
+    @UseInterceptors(FileInterceptor('file', {
+        storage: diskStorage({
+            destination: '../uploads/fotos',
+            filename: (req, file, cb) => {
+                const nomeArquivo = Date.now() + file.originalname
+                cb(null, `${nomeArquivo}`)
+            }
+        })
+    }))
+    async postar(@UploadedFile() file, @Body() postagem){
+        postagem.Img = file.path
         this.postService.criar(postagem)
+        return console.log("titulo: " + postagem.titulo + "     arquivo: " + file.path)
     }
 
     @Put()
