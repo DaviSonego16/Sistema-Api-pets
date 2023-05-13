@@ -11,16 +11,12 @@ export class PostagemController {
 
     }
     
-    @Get()
-    async obterTodos(): Promise<Postagem[]> {
-        const postagens = await this.postService.obterTodos()
-        for(var postagem in postagens){
-            console.log(postagem, postagens[postagem])
-        }
-        return postagens
+    @Get('/tipo/:tipo')
+    async obterTodos(@Param() params): Promise<Postagem[]> {
+        return await this.postService.obterTodos(params.tipo)
     }
 
-    @Get(':id')
+    @Get('/id/:id')
     async obterUm(@Param() params, @Res() res): Promise <Postagem> {
         const postagem = this.postService.obterUm(params.id)
         return (res.sendFile(join(process.cwd(),(await postagem).Img)))

@@ -9,8 +9,12 @@ export class PostagemService {
         private postagemModel: typeof Postagem
     ) {}
 
-    async obterTodos(): Promise<Postagem[]> {
-        return this.postagemModel.findAll();
+    async obterTodos(tipo: number): Promise<Postagem[]> {
+        return this.postagemModel.findAll({
+            where: {
+                Tipo_pub: tipo
+            }
+        });
     }
 
     async obterUm(id: number): Promise <Postagem> {
