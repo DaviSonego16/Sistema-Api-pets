@@ -24,7 +24,7 @@ export class PostagemService {
 
     async criar(postagem) {
         this.postagemModel.create(postagem)
-    }
+    } 
 
     async alterar(postagem: Postagem): Promise <[number, Postagem[]]> {
         return this.postagemModel.update(postagem, {

@@ -5,31 +5,31 @@ export class Postagem extends Model<Postagem> {
 
     @Column({
         type: DataType.STRING,
-        // allowNull: false,
+        allowNull: false,
     })
     Titulo: string;
 
     @Column({
         type: DataType.STRING,
-        // allowNull: false,
+        allowNull: false,
     })
     Descricao: string;
 
     @Column({
         type: DataType.STRING,
-        // allowNull: false,
+        allowNull: false,
     })
     Metodo_Contato: string;
 
     @Column({
         type: DataType.INTEGER,
-        // allowNull: false,
+        allowNull: false,
     })
     Tipo_pub: Number
 
     @Column({
         type: DataType.STRING,
-        // allowNull: false,
+        allowNull: false,
     })
     Img: string;
 

@@ -1,9 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Res, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { Postagem } from "../Models/postagem.model";
 import { PostagemService } from "../Services/postagem.service";
-import { FileInterceptor } from "@nestjs/platform-express";
-import { diskStorage } from 'multer'
-import path, { extname, join } from "path";
 
 @Controller('posts')
 export class PostagemController {
@@ -16,26 +13,9 @@ export class PostagemController {
         return await this.postService.obterTodos(params.tipo)
     }
 
-    @Get('/id/:id')
-    async obterUm(@Param() params, @Res() res): Promise <Postagem> {
-        const postagem = this.postService.obterUm(params.id)
-        return (res.sendFile(join(process.cwd(),(await postagem).Img)))
-    }
-
     @Post()
-    @UseInterceptors(FileInterceptor('file', {
-        storage: diskStorage({
-            destination: '../uploads/fotos',
-            filename: (req, file, cb) => {
-                const nomeArquivo = Date.now() + file.originalname
-                cb(null, `${nomeArquivo}`)
-            }
-        })
-    }))
-    async postar(@UploadedFile() file, @Body() postagem){
-        postagem.Img = file.path
+    async postar(@Body() postagem){
         this.postService.criar(postagem)
-        return console.log("titulo: " + postagem.titulo + "     arquivo: " + file.path)
     }
 
     @Put()
