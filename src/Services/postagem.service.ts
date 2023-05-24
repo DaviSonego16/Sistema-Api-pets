@@ -26,13 +26,6 @@ export class PostagemService {
         this.postagemModel.create(postagem)
     } 
 
-    async alterar(postagem: Postagem): Promise <[number, Postagem[]]> {
-        return this.postagemModel.update(postagem, {
-            where: {
-                id: postagem.id
-            }
-        })
-    }
 
     async apagar(id: number) {
         const post: Postagem = await this.obterUm(id);

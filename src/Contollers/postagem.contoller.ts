@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Res, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { Postagem } from "../Models/postagem.model";
 import { PostagemService } from "../Services/postagem.service";
 
@@ -16,11 +16,6 @@ export class PostagemController {
     @Post()
     async postar(@Body() postagem){
         this.postService.criar(postagem)
-    }
-
-    @Put()
-    async alterar(@Body() postagem: Postagem):Promise <[number, Postagem[]]> {
-        return this.postService.alterar(postagem)
     }
 
     @Delete(':id')

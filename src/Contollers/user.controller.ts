@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { Users } from "../Models/users.model";
 import { UserService } from "../Services/users.service";
 
@@ -22,12 +22,7 @@ export class UserController {
     async criar(@Body() postagem: Users) {
         this.userService.criar(postagem)
     }
-
-    @Put()
-    async alterar(@Body() usuario: Users):Promise <[number, Users[]]> {
-        return this.userService.alterar(usuario)
-    }
-
+    
     @Delete(':id')
     apagar(@Param() params){
         this.userService.apagar(params.id)

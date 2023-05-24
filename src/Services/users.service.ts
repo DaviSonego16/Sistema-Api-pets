@@ -22,14 +22,6 @@ export class UserService {
         this.userModel.create(user)
     }
 
-    async alterar(user: Users): Promise <[number, Users[]]> {
-        return this.userModel.update(user, {
-            where: {
-                id: user.id
-            }
-        })
-    }
-
     async apagar(id: number) {
         const user: Users = await this.obterUm(id);
         user.destroy()
